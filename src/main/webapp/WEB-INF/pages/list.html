@@ -5,41 +5,58 @@
     <title>Title</title>
 </head>
 <body>
-<h3>Users</h3>
+    <h3>Users</h3>
 
-<table border="1">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>LastName</th>
-        <th>Age</th>
-        <th>Edit/Delete/Add</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <th:block th:each="user:${listUsers}">
+    <table border="1">
+        <thead>
         <tr>
-<!--            <form name="table" th:action="@{/list/user.id}" method="get">-->
-            <td th:utext="user.getId"></td>
-                <td th:utext="user.getFirstName"></td>
-                <td th:utext="user.getLastName"></td>
-                <td th:utext="user.getAge"></td>
-<!--                <td> <input type="submit" value="Edit" th:action="@{/list/user.id/edit}"> <input type="submit" value="Delete" th:action="@{/list/user.id/delete}" ></td>-->
-<!--            </form>-->
+            <th>ID</th>
+            <th>Name</th>
+            <th>LastName</th>
+            <th>Age</th>
+            <th>Edit/Delete</th>
         </tr>
-    </th:block>
+        </thead>
 
-<!--    <tr>-->
-<!--        <form name="addUser"  th:action="@{/list/add}"  method="get">-->
-<!--            <td> <input type="text" name="firstName" /> </td>-->
-<!--            <td> <input type="text" name="lastName"/> </td>-->
-<!--            <td> <input type="text" name="age"/> </td>-->
-<!--            <td> <input type="submit" value="Add" th:action="@{/list/add}"> </td>-->
-<!--        </form>-->
-<!--    </tr>-->
-    </tbody>
-</table>
+        <tbody>
+        <th:block th:each="user : ${listUsers}">
+            <tr>
+                <form name="edit" method="post" th:action="@{/list}">
+                    <td> <input type="text" readonly name="id" th:value="${user.getId()}"> </td>
+                    <td> <input type="text" name="firstName" th:value="${user.getFirstName()}"/> </td>
+                    <td> <input type="text" name="lastName" th:value="${user.getLastName()}"/> </td>
+                    <td> <input type="text" name="age" th:value="${user.getAge()}"/> </td>
+                    <td> <input type="submit" value="Edit" th:formaction="@{/list/${user.id}/edit}"> <input
+                            type="submit" value="Delete" th:formaction="@{/list/${user.id}/delete}"></td>
+                </form>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+
+    <h3>Add user</h3>
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>LastName</th>
+            <th>Age</th>
+            <th>Add</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <form name="addUser" th:action="@{/list/add}" method="post">
+                <td><input type="text" name="firstName"/></td>
+                <td><input type="text" name="lastName"/></td>
+                <td><input type="text" name="age"/></td>
+                <td><input type="submit" value="Add"></td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+
 </body>
 </html>
